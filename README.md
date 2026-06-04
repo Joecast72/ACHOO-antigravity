@@ -88,3 +88,7 @@ MongoDB patient record
 
 → MongoDB write-back
 
+## License
+
+This project is licensed under the MIT License.
+
