@@ -1,94 +1,83 @@
-\# ACHOO — Adherence and Compliance Health Outcome Organization
+# ACHOO Antigravity
 
+**ACHOO Antigravity** is a pharmacist-built AI medication safety project designed to identify hypoglycemia risk in older adults with diabetes and generate explainable pharmacist follow-up recommendations.
 
+ACHOO stands for:
 
-ACHOO is a pharmacist-led medication safety triage prototype for older adults with diabetes, chronic kidney disease, fall risk, and polypharmacy.
+**Adherence and Compliance Health Outcome Organization**
 
+This project focuses on a high-risk geriatric diabetes scenario where medication burden, kidney function, prior hypoglycemia, low A1c, falls, dizziness, and poor appetite can combine into a preventable medication safety problem.
 
+---
 
-This project demonstrates a transparent clinical decision-support workflow:
+## Clinical Problem
 
+Older adults with diabetes are at increased risk for medication-related harm, especially when treated with insulin, sulfonylureas, or complex multi-drug regimens.
 
+Hypoglycemia in older adults can lead to:
 
-1\. Retrieve a synthetic patient record from MongoDB
+- Falls
+- Emergency department visits
+- Hospitalization
+- Functional decline
+- Loss of independence
+- Avoidable medication harm
 
-2\. Apply the ACHOO clinical scoring engine
+Many clinical systems store the necessary risk signals, but they are often scattered across medication lists, labs, history, and clinical notes.
 
-3\. Generate module-level medication safety risk results
+ACHOO demonstrates how an AI-assisted pharmacist safety agent can identify those signals, explain the risk, and recommend a practical follow-up plan.
 
-4\. Produce a pharmacist-facing audit trail
+---
 
-5\. Write the assessment back to MongoDB
+## What This Project Does
 
+ACHOO evaluates a patient profile and identifies hypoglycemia risk factors such as:
 
+- Prior severe hypoglycemia or ED visit
+- Insulin therapy
+- Sulfonylurea therapy
+- Low A1c / possible overtreatment
+- Chronic kidney disease
+- Recent fall or dizziness
+- Poor appetite or inconsistent intake
+- Polypharmacy and geriatric vulnerability
 
-\## Current Prototype Status
+The system produces:
 
+- A structured risk score
+- Triggered clinical factors
+- Evidence-based explanations
+- Pharmacist-facing recommendations
+- A follow-up flag written back to MongoDB
 
+---
 
-Working components:
+## Demo Patient
 
+The initial demo case uses an older adult patient with type 2 diabetes and multiple hypoglycemia risk factors.
 
+Example risk signals include:
 
-\- ACHOO clinical scoring engine
+- Age 78
+- Type 2 diabetes
+- Chronic kidney disease stage 3
+- A1c 6.4%
+- Insulin glargine
+- Glipizide
+- Poor appetite
+- Dizziness
+- Recent fall
+- Prior hypoglycemia emergency department visit
 
-\- Synthetic Velma Johnson case
+ACHOO identifies this patient as high risk and recommends pharmacist review for possible overtreatment and medication safety intervention.
 
-\- Flask API endpoints
+---
 
-\- MongoDB read/write workflow
+## Live API
 
-\- MongoDB assessment write-back
+The project includes a Flask API deployed on Google Cloud Run and connected to MongoDB Atlas.
 
-\- Pytest validation for the Velma worked example
-
-\- Local verification script for MongoDB read/write flow
-
-
-
-\## Important Clinical Boundary
-
-
-
-ACHOO is a pharmacist triage and decision-support aid.
-
-
-
-It is not:
-
-
-
-\- a diagnostic device
-
-\- an autonomous prescriber
-
-\- a validated clinical prediction instrument
-
-\- a replacement for pharmacist or clinician judgment
-
-
-
-Every medication-related output requires human pharmacist review before any medication change.
-
-
-
-\## Core Workflow
-
-
+Example endpoint:
 
 ```text
-
-MongoDB patient record
-
-→ Flask API
-
-→ ACHOO score\_patient()
-
-→ structured medication-safety assessment
-
-→ MongoDB write-back
-
-## License
-
-This project is licensed under the MIT License.
-
+GET /patient/SYN-001
